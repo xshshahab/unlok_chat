@@ -3,8 +3,10 @@ import authRoutes from "./routes/auth.route.js";
 import dotenv from "dotenv";
 import { connectDB } from "./lib/db.js";
 
-const app = express();
 dotenv.config();
+
+const app = express();
+app.use(express.json());
 
 const PORT = process.env.PORT || 5001;
 
