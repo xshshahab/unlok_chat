@@ -13,14 +13,14 @@ export const signup = async (req, res) => {
     if (password.length < 6) {
       return res
         .status(400)
-        .json({ message: "Password must be atleast 6 characters" });
+        .json({ message: "Password must be at least 6 characters" });
     }
 
     const user = await User.findOne({ email });
     if (user) return res.status(400).json({ message: "Email already exists" });
 
-    const salt = bcrypt.genSalt(10);
-
+    // Correctly generate the salt
+    const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = new User({
@@ -29,22 +29,32 @@ export const signup = async (req, res) => {
       password: hashedPassword,
     });
 
-    if (newUser) {
-      generateToken(newUser._id, res);
+    // Save the user
+    try {
       await newUser.save();
-
-      res.status(201).json({
-        _id: newUser._id,
-        fullName: newUser.fullName,
-        email: newUser.email,
-        password: newUser.password,
-        profilePic: newUser.profilePic,
-      });
-    } else {
-      res.status(400).json({ message: "Invalid user data" });
+    } catch (error) {
+      if (error.code === 11000) {
+        return res.status(400).json({ message: "Email already exists" });
+      }
+      throw error;
     }
+
+    // Generate token after saving user
+    try {
+      generateToken(newUser._id, res);
+    } catch (error) {
+      console.error("Error generating token:", error);
+      return res.status(500).json({ message: "Token generation failed" });
+    }
+
+    res.status(201).json({
+      _id: newUser._id,
+      fullName: newUser.fullName,
+      email: newUser.email,
+      profilePic: newUser.profilePic,
+    });
   } catch (error) {
-    console.log("Error in signup controller", error.message);
+    console.error("Error in signup controller:", error);
     return res.status(500).json({ message: "Internal Server ERROR" });
   }
 };
