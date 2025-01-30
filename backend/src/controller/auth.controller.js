@@ -10,7 +10,7 @@ export const signup = async (req, res) => {
       return res.status(400).json({ message: "All fields are required." });
     }
 
-    if (password.length) {
+    if (password.length < 6) {
       return res
         .status(400)
         .json({ message: "Password must be atleast 6 characters" });
@@ -20,6 +20,7 @@ export const signup = async (req, res) => {
     if (user) return res.status(400).json({ message: "Email already exists" });
 
     const salt = bcrypt.genSalt(10);
+
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = new User({
@@ -36,6 +37,7 @@ export const signup = async (req, res) => {
         _id: newUser._id,
         fullName: newUser.fullName,
         email: newUser.email,
+        password: newUser.password,
         profilePic: newUser.profilePic,
       });
     } else {
