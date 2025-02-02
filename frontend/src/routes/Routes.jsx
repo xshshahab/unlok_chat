@@ -8,23 +8,19 @@ import SettingsPage from "../pages/SettingsPage";
 import ProfilePage from "../pages/ProfilePage";
 import { useAuthStore } from '../store/useAuthStore';
 import { Loader } from "lucide-react";
+import ChatPage from '../pages/ChatPage';
 
 export const Routes = () => {
     const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
 
-    useEffect(() => {
-        checkAuth();
-    }, [checkAuth]);
-
+    useEffect(() => { checkAuth(); }, [checkAuth]);
     console.log({ authUser });
 
     // Show a loader while checking authentication
     if (isCheckingAuth && !authUser) {
-        return (
-            <div className="flex items-center justify-center h-screen">
-                <Loader className="size-10 animate-spin" />
-            </div>
-        );
+        return <div className="flex items-center justify-center h-screen">
+            <Loader className="size-10 animate-spin" />
+        </div>
     }
 
     // Dynamically define routes based on `authUser`
@@ -38,6 +34,10 @@ export const Routes = () => {
                     element: authUser ? <App /> : <Navigate to="/login" />
                 },
                 {
+                    path: "/chat",
+                    element: authUser ? <ChatPage /> : <Navigate to="/login" />
+                },
+                {
                     path: "/signup",
                     element: !authUser ? <SignupPage /> : <Navigate to="/" />
                 },
@@ -46,14 +46,12 @@ export const Routes = () => {
                     element: !authUser ? <LoginPage /> : <Navigate to="/" />
                 },
                 {
-                    path: "/setting",
+                    path: "/settings",
                     element: <SettingsPage />
-
                 },
                 {
                     path: "/profile",
                     element: authUser ? <ProfilePage /> : <Navigate to="/login" />
-
                 }
             ]
         }
