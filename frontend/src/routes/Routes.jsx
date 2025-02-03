@@ -11,10 +11,11 @@ import { Loader } from "lucide-react";
 import ChatPage from '../pages/ChatPage';
 
 export const Routes = () => {
-    const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
+    const { authUser, checkAuth, isCheckingAuth, onlineUsers } = useAuthStore();
 
     useEffect(() => { checkAuth(); }, [checkAuth]);
-    console.log({ authUser });
+
+    console.log({ authUser, onlineUsers });
 
     // Show a loader while checking authentication
     if (isCheckingAuth && !authUser) {
