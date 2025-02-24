@@ -1,14 +1,20 @@
 import React from "react";
 import { Link } from "react-router";
-import { Lock, MessageCircle, User } from "lucide-react"; // Icons for better UI
+import { Lock, MessageCircle, User } from "lucide-react";
+import LandingPage from "./assets/LandingPage.jpg"
 
 const App = () => {
   return (
-    <div className="bg-[#1e1e2e] text-white font-sans">
-      {/* Hero Section */}
-      <div className="relative flex items-center justify-center min-h-screen bg-gradient-to-b from-[#1e1e2e] to-[#2b213a]">
-        <div className="absolute inset-0 bg-cover bg-center opacity-10" style={{ backgroundImage: "url('https://source.unsplash.com/1600x900/?technology,chat')" }}></div>
-        <div className="text-center space-y-6 px-4">
+    <div className="bg-[#1e1e2e] text-white">
+      <div className="relative flex items-center justify-center min-h-[75vh] bg-gradient-to-b from-[#1e1e2e] to-[#2b213a]">
+        {/* Background Image with pointer-events-none */}
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-50 pointer-events-none"
+          style={{ backgroundImage: `url(${LandingPage})` }}
+        ></div>
+
+        {/* Main Content */}
+        <div className="relative z-10 text-center space-y-6 px-4">
           <h1 className="text-5xl sm:text-6xl font-bold tracking-wide text-[#c778dd]">
             Unlock the Future of <span className="text-[#ff7a93]">Chatting</span>
           </h1>
@@ -34,8 +40,9 @@ const App = () => {
         </div>
       </div>
 
+
       {/* Features Section */}
-      <section className="py-20 px-6 bg-[#2b213a]">
+      <section className="py-20 px-6 bg-[#180d29]">
         <h2 className="text-4xl font-bold text-center text-[#ff7a93] mb-12">
           Why Choose Unlok Chat?
         </h2>
@@ -90,33 +97,6 @@ const App = () => {
           </div>
         </div>
       </section>
-
-      {/* Pricing Section */}
-      <section className="py-20 px-6 bg-[#2b213a]">
-        <h2 className="text-4xl font-bold text-center text-[#c778dd] mb-12">
-          Affordable Pricing Plans
-        </h2>
-        <div className="flex flex-col sm:flex-row justify-center space-y-8 sm:space-y-0 sm:space-x-8">
-          <div className="bg-[#291828] p-6 rounded-lg shadow-lg text-center">
-            <h3 className="text-2xl font-bold text-[#c778dd]">Free</h3>
-            <p className="text-[#a6e3a1] mt-4">Basic messaging and chatrooms.</p>
-            <p className="text-3xl font-bold text-[#ff7a93] mt-6">$0</p>
-            <button className="mt-6 px-6 py-3 bg-[#89b4fa] hover:bg-[#6897e2] text-black rounded-lg">
-              Get Started
-            </button>
-          </div>
-          <div className="bg-[#291828] p-6 rounded-lg shadow-lg text-center">
-            <h3 className="text-2xl font-bold text-[#c778dd]">Premium</h3>
-            <p className="text-[#a6e3a1] mt-4">Secure private chats and priority support.</p>
-            <p className="text-3xl font-bold text-[#ff7a93] mt-6">$5/month</p>
-            <button className="mt-6 px-6 py-3 bg-[#ff7a93] hover:bg-[#f05165] text-black rounded-lg">
-              Upgrade Now
-            </button>
-          </div>
-        </div>
-      </section>
-
-
     </div>
   );
 };

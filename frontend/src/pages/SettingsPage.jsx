@@ -2,7 +2,7 @@ import React from 'react'
 
 const SettingsPage = () => {
     return (
-        <div>SettingsPage</div>
+        <div className='h-screen flex items-center justify-center'>SettingsPage</div>
     )
 }
 
